@@ -1,0 +1,39 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && mkdir dist && babel src -s -d dist",
+    "production": "npm run build && node dist/server",
+    "start": "nodemon --watch src --exec babel-node src/server.js",
+    "heroku-postbuild": "npm install && npm run build"
+  },
+  "author": "Ashutosh Krishna",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "express-validator": "^6.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.10.8",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.4.13",
+    "path": "^0.12.7",
+    "regenerator-runtime": "^0.13.7"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "nodemon": "^2.0.4"
+  }
+}
