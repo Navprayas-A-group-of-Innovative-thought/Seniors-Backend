@@ -36,7 +36,7 @@ connection.once("open", () => console.log("database connected"));
 //---------------------------------------------------------------------
 
 //Handle request here
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.json({
     msg: "Counselling Backend is Up",
     isRunning: true,
