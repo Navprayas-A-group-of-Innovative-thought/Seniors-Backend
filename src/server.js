@@ -33,6 +33,10 @@ const connection = mongoose.connection;
 connection.once("open", () => console.log("database connected"));
 //---------------------------------------------------------------------
 //import routing here
+
+const authRouter = require("./routes/auth.route");
+app.use("/api", authRouter);
+
 //---------------------------------------------------------------------
 
 //Handle request here
