@@ -166,37 +166,26 @@ exports.loginController = (req, res) => {
         errorDetails: "User doesn't exist.",
       });
     }
-    // authenticate
-    if (!user.authenticate(password)) {
-      return res.status(401).json({
-        errorDetails: "Incorrect email or password",
-      });
-    }
-    // generate a token and send to client
-    const token = jwt.sign(
-      {
-        _id: user._id,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "7d",
+    // check if user is verified
+    if (user.emailVerified) {
+      // authenticate
+      if (!user.authenticate(password)) {
+        return res.status(401).json({
+          errorDetails: "Incorrect email or password",
+        });
       }
-    );
-    res.cookie("token", token, { expiresIn: "7d" });
-    const {
-      _id,
-      name,
-      email,
-      contact,
-      college,
-      category,
-      batch,
-      branch,
-    } = user;
-
-    return res.status(200).json({
-      token,
-      user: {
+      // generate a token and send to client
+      const token = jwt.sign(
+        {
+          _id: user._id,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "7d",
+        }
+      );
+      res.cookie("token", token, { expiresIn: "7d" });
+      const {
         _id,
         name,
         email,
@@ -205,8 +194,26 @@ exports.loginController = (req, res) => {
         category,
         batch,
         branch,
-      },
-    });
+      } = user;
+
+      return res.status(200).json({
+        token,
+        user: {
+          _id,
+          name,
+          email,
+          contact,
+          college,
+          category,
+          batch,
+          branch,
+        },
+      });
+    } else {
+      return res
+        .status(400)
+        .json({ errorDetails: "Your account is not activated yet." });
+    }
   });
 };
 
