@@ -43,6 +43,12 @@ app.use("/api", authRouter);
 const collegeRouter = require("./routes/college.route");
 app.use("/api/college", collegeRouter);
 
+const tagRouter = require("./routes/tag.route");
+app.use("/api/tag", tagRouter);
+
+const forumRouter = require("./routes/forum.route");
+app.use("/api/forum", forumRouter);
+
 //---------------------------------------------------------------------
 
 //Handle request here
