@@ -7,7 +7,7 @@ const uniqueMessage = error => {
     let output
     try {
         let fieldName = error.message.split(".$")[1]
-        field = field.split("dup key")[0]
+        let field = field.split("dup key")[0]
         field = field.substring(0, field.lastIndexOf("_"))
         req.flash("errors", [{
             message: "An account with this " + field + " already exists."
@@ -17,7 +17,7 @@ const uniqueMessage = error => {
             fieldName.slice(1) +
             " already exists";
     } catch (err) {
-        output = "already exists";
+        output = "Already exists";
     }
 
     return output;

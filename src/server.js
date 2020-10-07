@@ -26,7 +26,7 @@ mongoose.connect(mongodbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
 });
 
 const connection = mongoose.connection;
@@ -39,6 +39,15 @@ app.use("/api/admin", adminRouter);
 
 const authRouter = require("./routes/auth.route");
 app.use("/api", authRouter);
+
+const collegeRouter = require("./routes/college.route");
+app.use("/api/college", collegeRouter);
+
+const tagRouter = require("./routes/tag.route");
+app.use("/api/tag", tagRouter);
+
+const forumRouter = require("./routes/forum.route");
+app.use("/api/forum", forumRouter);
 
 //---------------------------------------------------------------------
 
