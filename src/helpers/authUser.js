@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 // Middleware to check if the user is logged in or not
-const auth = (req, res, next) => {
+const authUser = (req, res, next) => {
   try {
     // Extracting token from authorization in header and splitting it as Bearer and token id
     const token = req.headers.authorization.split(" ");
@@ -19,4 +19,4 @@ const auth = (req, res, next) => {
   }
 };
 
-module.exports = auth;
+module.exports = authUser;
