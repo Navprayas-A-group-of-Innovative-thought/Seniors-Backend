@@ -2,37 +2,34 @@
 const { check } = require("express-validator");
 import regeneratorRuntime from "regenerator-runtime";
 
-//Signup Validation
-exports.validSignup = [
-  check("name", "Name is required.").notEmpty(),
-  check("email", "Email cannot be empty.")
-    .notEmpty()
-    .isEmail()
-    .withMessage("Must be a valid email address"),
-  check("password", "Password is required")
-    .notEmpty()
-    .trim()
-    .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&_])(?=\S+$).{8,20}$/)
-    .withMessage(
-      "The password must be 8 to 20 characters long and must contain atleast one lower case, one uppercase, one special character(@,#,$,%,&,_) and one digit."
-    ),
-  check("confirmPassword", "Confirm password is required")
-    .notEmpty()
-    .trim()
-    .custom(async function (confirmPassword, { req }) {
-      const password = req.body.password;
-      if (password !== confirmPassword) {
-        throw new Error("Password and Confirm Password do not match.");
-      }
-    }),
-  check("college", "College is required.").notEmpty(),
-  check("batch", "Batch is required.").notEmpty(),
-  check("branch", "Branch is required.").notEmpty(),
-  check("category").isIn(["IIT", "NIT", "IIIT"]),
+// Admin Signup Validation
+exports.validAdminSignup = [
+    check("name", "Name is required.").notEmpty(),
+    check("email", "Email cannot be empty.")
+      .notEmpty()
+      .isEmail()
+      .withMessage("Must be a valid email address"),
+    check("password", "Password is required")
+      .notEmpty()
+      .trim()
+      .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&_])(?=\S+$).{8,20}$/)
+      .withMessage(
+        "The password must be 8 to 20 characters long and must contain atleast one lower case, one uppercase, one special character(@,#,$,%,&,_) and one digit."
+      ),
+    check("confirmPassword", "Confirm password is required")
+      .notEmpty()
+      .trim()
+      .custom(async function (confirmPassword, { req }) {
+        const password = req.body.password;
+        if (password !== confirmPassword) {
+          throw new Error("Password and Confirm Password do not match.");
+        }
+      }),
+    check("contact","Mobile Number is required.").notEmpty()
 ];
-
-//Login Validation
-exports.validLogin = [
+  
+// Admin Login Validation
+exports.validAdminLogin = [
   check("email", "Email cannot be empty.")
     .notEmpty()
     .isEmail()
@@ -45,9 +42,9 @@ exports.validLogin = [
       "The password must be 8 to 20 characters long and must contain atleast one lower case, one uppercase, one special character(@,#,$,%,&,_) and one digit."
     ),
 ];
-
+  
 //Forgot Password Validation
-exports.forgotPasswordValidator = [
+exports.adminForgotPasswordValidator = [
   check("email", "Email cannot be empty.")
     .notEmpty()
     .isEmail()
@@ -55,7 +52,7 @@ exports.forgotPasswordValidator = [
 ];
 
 //Reset Password Validation
-exports.resetPasswordValidator = [
+exports.adminResetPasswordValidator = [
   check("newPassword", "Password is required.")
     .trim()
     .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&_])(?=\S+$).{8,20}$/)
@@ -65,14 +62,14 @@ exports.resetPasswordValidator = [
 ];
 
 // Change Password Validation
-exports.changePasswordValidator = [
+exports.adminChangePasswordValidator = [
   check("oldPassword", "Old password is required").notEmpty()
     .trim()
     .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&_])(?=\S+$).{8,20}$/)
     .withMessage(
       "Old password was 8 to 20 characters long and had atleast one lower case, one uppercase, one special character(@,#,$,%,&,_) and one digit."
     ),
-  check("newchangePassword", "New Password is required.").notEmpty()
+  check("newchangePassword", "Password is required.").notEmpty()
     .trim()
     .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&_])(?=\S+$).{8,20}$/)
     .withMessage(

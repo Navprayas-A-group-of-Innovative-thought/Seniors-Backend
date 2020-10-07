@@ -15,7 +15,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 //Use bodyParser
 import bodyParser from "body-parser";
 app.use(bodyParser.json());
@@ -27,12 +26,16 @@ mongoose.connect(mongodbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false
 });
 
 const connection = mongoose.connection;
 connection.once("open", () => console.log("database connected"));
 //---------------------------------------------------------------------
 //import routing here
+
+const adminRouter = require("./routes/admin.route");
+app.use("/api/admin", adminRouter);
 
 const authRouter = require("./routes/auth.route");
 app.use("/api", authRouter);

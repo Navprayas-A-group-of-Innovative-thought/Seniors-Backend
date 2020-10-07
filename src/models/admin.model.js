@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 
-const userSchema = new mongoose.Schema(
+const adminSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema(
     },
     contact: {
       type: Number,
+      required: true,
       validate: {
         validator: function (value) {
           return /^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[0]?)?[6789]\d{9}|(\d[ -]?){10}\d$/.test(
@@ -29,24 +30,6 @@ const userSchema = new mongoose.Schema(
         },
         message: (props) => `${props.value} is a not valid phone number.`,
       },
-    },
-    college: {
-      type: String,
-      trim: true,
-      required: true,
-    },
-    category: {
-      type: String,
-      required: true,
-    },
-    batch: {
-      type: Number,
-      required: true,
-    },
-    branch: {
-      type: String,
-      trim: true,
-      required: true,
     },
     hashed_password: {
       type: String,
@@ -61,13 +44,13 @@ const userSchema = new mongoose.Schema(
     },
     isAdmin: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   { timestamps: true }
 );
 
-userSchema
+adminSchema
   .virtual("password")
   .set(function (password) {
     // create a temporary variable called _password
@@ -84,7 +67,7 @@ userSchema
     return this._password;
   });
 
-userSchema.methods = {
+adminSchema.methods = {
   authenticate: function (plainPassword) {
     return this.encryptPassword(plainPassword) === this.hashed_password;
   },
@@ -106,4 +89,4 @@ userSchema.methods = {
   },
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Admin", adminSchema);
