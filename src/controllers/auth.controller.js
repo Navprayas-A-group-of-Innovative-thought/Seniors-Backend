@@ -478,7 +478,7 @@ exports.deletionController = (req, res) => {
         .status(500)
         .json({ errorDetails: "We could not process your request." });
     } else {
-      res.clearCookie("token")
+      res.clearCookie("token");
       res.status(200).json({ responseData: "Account deleted successfully." });
     }
   });
